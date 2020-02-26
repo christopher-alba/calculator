@@ -257,10 +257,12 @@ function clickFunction(inputButton){
                 if(location == undefined){
                     display += "|";
                 }
-    
+               
                 
             }
             $(".calc-display h4").text(display);
+            $('.calc-display').animate({scrollLeft:'+=1500'},500);
+            
           
         }
         
