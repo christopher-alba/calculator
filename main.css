@@ -18,11 +18,11 @@
     position:relative;
    
     width:85%;
-    min-height:60px;
+    min-height:80px;
     margin: 30px auto 30px auto;
    
     border-radius:10px;
-    background:rgb(16, 156, 79);
+    background:rgb(152, 226, 186);
     border:2px solid lightgreen;
     overflow-x: auto;
     overflow-y:hidden;
@@ -35,7 +35,7 @@
     text-align:right;
 }
 .calc-display h4{
-    padding-top:10px;
+    padding-top:20px;
     padding-left:10px;
     padding-right:10px;
     font-family: 'Orbitron', sans-serif;
@@ -69,4 +69,30 @@
 }
 .on{
     background:rgb(0, 255, 85);
+}
+
+/* scroll bar for display */
+/* width */
+@media(min-width:1025px){
+    ::-webkit-scrollbar {
+        width: 10px;
+        
+    }
+    
+    /* Track */
+    ::-webkit-scrollbar-track {
+    background: #f1f1f173; 
+    border-radius:5px;
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+    background: rgba(136, 136, 136, 0.432); 
+    border-radius:5px;
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background: rgba(85, 85, 85, 0.479); 
+    }
 }

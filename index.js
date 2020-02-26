@@ -20,7 +20,7 @@ function clickFunction(inputButton){
 
     if(power == true){
         
-        if( $(".calc-display h4").text() == "SYNTAX ERROR"){
+        if( $(".calc-display h4").text() == "SYNTAX ERROR" || $(".calc-display h4").text() == "MATH ERROR"){
           
             $(".calc-display h4").text(display);
         }
@@ -88,6 +88,7 @@ function clickFunction(inputButton){
                 display += "|"
                 $(".calc-display h4").text(display);
             }
+            $('.calc-display').animate({scrollLeft:'-=20'},1);
            
     
         }
@@ -118,6 +119,7 @@ function clickFunction(inputButton){
                  $(".calc-display h4").text(display);
     
             }
+            $('.calc-display').animate({scrollLeft:'+=20'},1);
             
             
     
@@ -201,10 +203,14 @@ function clickFunction(inputButton){
                   }
             }
             if(trigger == true){
-                display = ans.toString();
-               
-                
-                $(".calc-display h4").text(display);
+
+                if(ans == Infinity){
+                    $(".calc-display h4").text("MATH ERROR");
+                }
+                else{
+                    display = ans.toString();
+                    $(".calc-display h4").text(display);
+                }                
             }
             
             
@@ -261,7 +267,11 @@ function clickFunction(inputButton){
                 
             }
             $(".calc-display h4").text(display);
-            $('.calc-display').animate({scrollLeft:'+=1500'},500);
+
+            
+            $('.calc-display').animate({scrollLeft:'+=20'},1);
+            
+           
             
           
         }
