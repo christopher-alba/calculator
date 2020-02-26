@@ -224,7 +224,7 @@ function clickFunction(inputButton){
             }
             var location = getIndicatorIndex();
             
-            if(location > 0){
+            if(location >= 0){
                 
     
                 //remove indicator
@@ -248,14 +248,6 @@ function clickFunction(inputButton){
                 display = firstHalf + secondHalf
     
                
-            }
-            else if(location == 0){
-                display = "";
-                display += buttonPressed;
-                display += "|";
-                
-               
-    
             }
             else{
         
