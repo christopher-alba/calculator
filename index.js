@@ -3,17 +3,25 @@
 let power = false
 let display = "";
 
+function getIndicatorIndex(){
+    var index;
+    for(let i = 0; i < display.length; i++){
+        if(display[i] == "|"){
+            index = i;
+        }
+    }
+    return index;
 
+}
 
+function clickFunction(inputButton){
 
-$("button").click(function(){
-
-    let buttonPressed = this.textContent;
+    let buttonPressed = inputButton;
 
     if(power == true){
         
         if( $(".calc-display h4").text() == "SYNTAX ERROR"){
-            display = "";
+          
             $(".calc-display h4").text(display);
         }
     
@@ -21,12 +29,9 @@ $("button").click(function(){
             //delete character behind indicator
             
             //get location of indicator
-            var location;
-            for(let i = 0; i < display.length; i++){
-                if(display[i] == "|"){
-                    location = i;
-                }
-            }
+
+            var location = getIndicatorIndex();
+           
            
             if(location > 0){
               
@@ -59,12 +64,8 @@ $("button").click(function(){
         else if(buttonPressed == "←"){
             //move indicator left
             //get location of indicator
-            var location;
-            for(let i = 0; i < display.length; i++){
-                if(display[i] == "|"){
-                    location = i;
-                }
-            }
+            var location = getIndicatorIndex();
+           
             
             if(location > 0){
                 //remove indicator from display
@@ -92,12 +93,7 @@ $("button").click(function(){
         }
         else if(buttonPressed == "→"){
             //move indicator right
-            var location;
-            for(let i = 0; i < display.length; i++){
-                if(display[i] == "|"){
-                    location = i;
-                }
-            }
+            var location = getIndicatorIndex();
             
             if(location == undefined){
                 //place indicator at end of display
@@ -130,13 +126,7 @@ $("button").click(function(){
             //evaluate display using eval()
     
             //remove the indicator from display string
-            var location;
-            
-            for(let i = 0; i < display.length; i++){
-                if(display[i] == "|"){
-                    location = i;
-                }
-            }
+            var location = getIndicatorIndex();
     
             if(location != undefined){
                 let firstHalf = display.slice(0,location);
@@ -155,7 +145,7 @@ $("button").click(function(){
                 if(display[i] == "("){
                     if(typeof parseInt(display[i - 1],10) == "number" && i > 0){
                         let character = display[i-1];
-                        if( character != "+" &&  character != "-" &&  character != "/" &&  character != "*"){
+                        if( character != "+" &&  character != "-" &&  character != "/" &&  character != "*" && character != "("){
                             indexesOpen.push(i);
                         }
                            
@@ -195,19 +185,28 @@ $("button").click(function(){
           
     
             var ans;
-    
+            let trigger = true;
             //catch the syntax errors
-            try {
-                ans = eval(display);
+            if(display != ""){
+                try {
+                    ans = eval(display);
+                   
+                  }
+                  catch(err) {
+                    
+                    trigger = false;
+                   
+                
+                    $(".calc-display h4").text("SYNTAX ERROR");
+                  }
+            }
+            if(trigger == true){
                 display = ans.toString();
+               
+                
                 $(".calc-display h4").text(display);
-              }
-              catch(err) {
-                 
-                  
-                display = "SYNTAX ERROR";
-                $(".calc-display h4").text(display);
-              }
+            }
+            
             
     
             
@@ -223,13 +222,7 @@ $("button").click(function(){
             if(buttonPressed == "X"){
                 buttonPressed = "*"
             }
-            var location;
-            //locate indicator
-            for(let i = 0; i < display.length; i++){
-                if(display[i] == "|"){
-                    location = i;
-                }
-            }
+            var location = getIndicatorIndex();
             
             if(location > 0){
                 
@@ -265,6 +258,8 @@ $("button").click(function(){
     
             }
             else{
+        
+                
                 display += buttonPressed;
     
                 if(location == undefined){
@@ -289,8 +284,14 @@ $("button").click(function(){
         }
     }
     
-
-    
+}
+document.getElementsByTagName("button")[0].addEventListener("touchStart",function(){
+    let buttonPressed = this.textContent;
+    clickFunction(buttonPressed);
+} );
+$("button").click(function(){
+    let buttonPressed = this.textContent;
+    clickFunction(buttonPressed);
 });
 
 
