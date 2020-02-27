@@ -48,8 +48,13 @@ function clickFunction(inputButton){
         if(justAnswered == true){
 
             if(buttonPressed != "+" && buttonPressed != "-"&& buttonPressed != "x" && buttonPressed != "÷"){
-                display = "|";
-                $(".calc-display h4").text(display);
+                
+                if(buttonPressed != "PREV"){
+                    display = "|";
+                    $(".calc-display h4").text(display);
+                }
+                
+              
             }
 
 
