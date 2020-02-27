@@ -11,6 +11,15 @@
     .calc-frame{
         margin-top:0px;
         margin-bottom:0px;
+        width:100vw;
+        min-height:100vh;
+        border-radius: 0px;
+    }
+    .calc-input button{
+        margin:3px 3px 3px 3px !important;
+    }
+    .onOff{
+        font-size:0.7rem;
     }
 
 }

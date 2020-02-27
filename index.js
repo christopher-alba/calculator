@@ -1,6 +1,6 @@
 //user input translates into a string 
 
-let power = false
+let power = true;
 let display = "";
 
 // memory variables
@@ -104,11 +104,11 @@ function clickFunction(inputButton){
         }
         else if(buttonPressed == "NEXT"){            
             
-            console.log("NEXT: ");
+            
             
             if(memory.length > 0 && currentlyAccessingLocation < memory.length - 1){
 
-            console.log(currentlyAccessingLocation);
+            
             
 
                 currentlyAccessingLocation++;
@@ -252,6 +252,10 @@ function clickFunction(inputButton){
             for(let i = 0; i < display.length; i++){
                 if(i > 0){
                     if(display[i] == "(" || display[i] == "s" || display[i] == "π"){
+
+                        if(display[i] == "π" && display[i - 1] == "π" ){
+                            indexesOpen.push(i);
+                        }
                     
                         if( isNaN(display[i-1]) == false){
                             
@@ -316,7 +320,7 @@ function clickFunction(inputButton){
                     }
                     catch(err) {
                     
-                    console.log(err);
+                    
                     
                     trigger = false;
                     
