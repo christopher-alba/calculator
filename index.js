@@ -1,6 +1,6 @@
 //user input translates into a string 
 
-let power = true;
+let power = false;
 let display = "";
 
 // memory variables
