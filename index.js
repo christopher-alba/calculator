@@ -55,12 +55,18 @@ function clickFunction(inputButton){
             //get location of indicator
 
             var location = getIndicatorIndex();
+            if(location == undefined){
+                display += "|";
+                location = getIndicatorIndex();
+
+            }
+            
            
            
             if(location > 0){
               
     
-                //add indicator to new position
+                
                 let firstHalf = display.slice(0,location - 1);
                 let secondHalf = display.slice(location);
                 
@@ -69,6 +75,7 @@ function clickFunction(inputButton){
                
                 $(".calc-display h4").text(display);
             }
+            
     
         }
         else if(buttonPressed == "AC"){
