@@ -3,6 +3,12 @@
 let power = false
 let display = "";
 
+// memory variables
+let memory = [];
+let memoryIndex = 0;
+currentlyAccessingLocation = 0;
+let firstPrev = true;
+
 function getIndicatorIndex(){
     var index;
     for(let i = 0; i < display.length; i++){
@@ -14,6 +20,24 @@ function getIndicatorIndex(){
 
 }
 
+function finalizeString(string){
+    
+    //convert all arithmetic operators to javascript equivalent
+    string = string.replace(/x/g, "*");
+
+    string = string.replace(/÷/g, "/");
+
+    string = string.replace(/π/g, Math.PI);
+    
+    return string;
+
+}
+function square(number){
+    return number*number;
+}
+function sqrt(number){
+    return Math.sqrt(number);
+}
 function clickFunction(inputButton){
 
     let buttonPressed = inputButton;
@@ -53,6 +77,62 @@ function clickFunction(inputButton){
             $(".calc-display h4").text(display);
     
         }
+        else if(buttonPressed == "NEXT"){            
+            
+            console.log("NEXT: ");
+            
+           if(memory.length > 0 && currentlyAccessingLocation < memory.length - 1){
+
+            console.log(currentlyAccessingLocation);
+            
+
+                currentlyAccessingLocation++;
+                display = memory[currentlyAccessingLocation];
+                $(".calc-display h4").text(display);
+                if(currentlyAccessingLocation == memory.length - 1){
+                    firstPrev = true;
+                    currentlyAccessingLocation--;
+                    
+                }
+
+           }
+
+    
+        }
+        else if(buttonPressed == "PREV"){
+
+            
+            //if this was the first time previous was
+            console.log("PREV: ");
+            
+            if(firstPrev == true){
+                memory[memoryIndex] = display;
+                currentlyAccessingLocation++;
+                console.log("setting to false");
+                
+                firstPrev = false;
+            }
+
+               
+            
+            
+            
+            if(memory.length > 0 && currentlyAccessingLocation > 0){
+
+                currentlyAccessingLocation--;
+                console.log(memory);
+                
+                console.log("testing");
+                console.log("CAL2: " + currentlyAccessingLocation);
+                
+                
+                display = memory[currentlyAccessingLocation];
+                
+                
+                $(".calc-display h4").text(display);
+               
+           }
+        }      
         else if(buttonPressed == "ON/OFF"){
             //turn off calculator
             power = false;
@@ -137,26 +217,41 @@ function clickFunction(inputButton){
                 display = firstHalf + secondHalf;
             }
             
+            let saveString = display;
+           
+
+
             //add a '*' to any brackets used for multiplication
             let indexesOpen = [];
            
             
+            
             //locate brackets
             for(let i = 0; i < display.length; i++){
-    
-                if(display[i] == "("){
-                    if(typeof parseInt(display[i - 1],10) == "number" && i > 0){
-                        let character = display[i-1];
-                        if( character != "+" &&  character != "-" &&  character != "/" &&  character != "*" && character != "("){
-                            indexesOpen.push(i);
+                if(i > 0){
+                    if(display[i] == "(" || display[i] == "s" || display[i] == "π"){
+                    
+                        if( isNaN(display[i-1]) == false){
+                            
+                            let character = display[i-1];
+                            if( character != "+" &&  character != "-" &&  character != "/" &&  character != "*" && character != "(" ){
+                                indexesOpen.push(i);
+                            }
+                               
                         }
-                           
+                        else if(display[i - 1] == ")"){
+    
+                            indexesOpen.push(i);
+    
+                        }
                     }
+        
                 }
     
+                
     
             }
-          
+            
             //perform insertions of '*'
     
             for(let i = 0; i < indexesOpen.length ; i++){
@@ -184,8 +279,11 @@ function clickFunction(inputButton){
                
     
             }
-          
-    
+            
+            //process display to make javascript understand it
+            display = finalizeString(display);
+            
+            
             var ans;
             let trigger = true;
             //catch the syntax errors
@@ -195,6 +293,8 @@ function clickFunction(inputButton){
                    
                   }
                   catch(err) {
+                    
+                    console.log(err);
                     
                     trigger = false;
                    
@@ -208,6 +308,9 @@ function clickFunction(inputButton){
                     $(".calc-display h4").text("MATH ERROR");
                 }
                 else{
+                    memory[memoryIndex] = saveString;
+                    currentlyAccessingLocation = memoryIndex;
+                    memoryIndex++;
                     display = ans.toString();
                     $(".calc-display h4").text(display);
                 }                
@@ -221,12 +324,12 @@ function clickFunction(inputButton){
         }
         else{
     
-            if(buttonPressed == "÷"){
-                buttonPressed = "/";
+            if(buttonPressed == "x^2"){
                 
+                buttonPressed = "square()";
             }
-            if(buttonPressed == "X"){
-                buttonPressed = "*"
+            if(buttonPressed == "2√"){
+                buttonPressed = "sqrt()";
             }
             var location = getIndicatorIndex();
             
@@ -246,12 +349,30 @@ function clickFunction(inputButton){
                 
                 display = firstHalf + secondHalf;
                 //place indicator
+                if(buttonPressed == "square()"){
+
+                    firstHalf = display.slice(0,location + 7);
+                    secondHalf = display.slice(location + 7);
+                    
+                    firstHalf += "|";
+                    display = firstHalf + secondHalf;
+                }
+                else if(buttonPressed == "sqrt()"){
+                    firstHalf = display.slice(0,location + 5);
+                    secondHalf = display.slice(location + 5);
+                    
+                    firstHalf += "|";
+                    display = firstHalf + secondHalf;
+                }
+                else{
+                    firstHalf = display.slice(0,location + 1);
+                    secondHalf = display.slice(location + 1);
+                    
+                    firstHalf += "|";
+                    display = firstHalf + secondHalf;
+                }
     
-                firstHalf = display.slice(0,location + 1);
-                secondHalf = display.slice(location + 1);
                 
-                firstHalf += "|";
-                display = firstHalf + secondHalf
     
                
             }
@@ -274,6 +395,12 @@ function clickFunction(inputButton){
            
             
           
+        }
+        if(power == false){
+            memory = [];
+            memoryIndex = 0;
+            currentlyAccessingLocation = 0;
+            firstPrev = true;
         }
         
     }

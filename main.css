@@ -70,6 +70,9 @@
 .on{
     background:rgb(0, 255, 85);
 }
+.num{
+    font-size:2rem;
+}
 
 /* scroll bar for display */
 /* width */
@@ -95,4 +98,16 @@
     ::-webkit-scrollbar-thumb:hover {
     background: rgba(85, 85, 85, 0.479); 
     }
+}
+.onOff{
+    background:rgb(63, 63, 63);
+    color:white;
+}
+.del{
+    color:white;
+    background:rgb(155, 4, 4);
+}
+.ac{
+    color:white;
+    background:rgb(184, 152, 11);
 }
