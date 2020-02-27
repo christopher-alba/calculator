@@ -1,0 +1,113 @@
+.calc-frame{
+    width:400px;
+    min-height:700px;
+    background:rgb(48, 48, 48);
+    margin:100px auto 100px auto;
+    border-radius:60px;
+    
+}
+
+@media(max-width:500px){
+    .calc-frame{
+        margin-top:0px;
+        margin-bottom:0px;
+    }
+
+}
+.calc-display{
+    position:relative;
+   
+    width:85%;
+    min-height:80px;
+    margin: 30px auto 30px auto;
+   
+    border-radius:10px;
+    background:rgb(152, 226, 186);
+    border:2px solid lightgreen;
+    overflow-x: auto;
+    overflow-y:hidden;
+    
+}
+.calcRow{
+    text-align:center;
+}
+.calcRowTop{
+    text-align:right;
+}
+.calc-display h4{
+    padding-top:20px;
+    padding-left:10px;
+    padding-right:10px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.calc-input{
+    position:relative;
+    top:0px;
+    width:85%;
+    margin:0 auto 0 auto;
+    
+    padding-bottom:50px;
+
+}
+.calc-input button{
+    height:50px;
+    width:21%;
+    margin:10px 5px 10px 5px;
+    border-radius:10px;
+    outline: none;
+    font-weight:800;
+}
+.powerLight{
+    width:100px;
+    padding:10px;
+    margin: 0 auto 0 auto;
+    background:rgba(255, 255, 255, 0.466);
+    transition:500ms;
+    text-align:center;
+
+}
+.on{
+    background:rgb(0, 255, 85);
+}
+.num{
+    font-size:2rem;
+}
+
+/* scroll bar for display */
+/* width */
+@media(min-width:1025px){
+    ::-webkit-scrollbar {
+        width: 10px;
+        
+    }
+    
+    /* Track */
+    ::-webkit-scrollbar-track {
+    background: #f1f1f173; 
+    border-radius:5px;
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+    background: rgba(136, 136, 136, 0.432); 
+    border-radius:5px;
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background: rgba(85, 85, 85, 0.479); 
+    }
+}
+.onOff{
+    background:rgb(63, 63, 63);
+    color:white;
+}
+.del{
+    color:white;
+    background:rgb(155, 4, 4);
+}
+.ac{
+    color:white;
+    background:rgb(184, 152, 11);
+}
