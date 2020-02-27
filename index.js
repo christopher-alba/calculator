@@ -8,6 +8,7 @@ let memory = [];
 let memoryIndex = 0;
 currentlyAccessingLocation = 0;
 let firstPrev = true;
+let justAnswered = false;
 
 function getIndicatorIndex(){
     var index;
@@ -43,9 +44,20 @@ function clickFunction(inputButton){
     let buttonPressed = inputButton;
 
     if(power == true){
-        
+
+        if(justAnswered == true){
+
+            if(buttonPressed != "+" && buttonPressed != "-"&& buttonPressed != "x" && buttonPressed != "÷"){
+                display = "";
+            }
+
+
+
+            justAnswered = false;
+        }
+       
         if( $(".calc-display h4").text() == "SYNTAX ERROR" || $(".calc-display h4").text() == "MATH ERROR"){
-          
+        
             $(".calc-display h4").text(display);
         }
     
@@ -61,10 +73,10 @@ function clickFunction(inputButton){
 
             }
             
-           
-           
+            
+            
             if(location > 0){
-              
+                
     
                 
                 let firstHalf = display.slice(0,location - 1);
@@ -72,7 +84,7 @@ function clickFunction(inputButton){
                 
     
                 display = firstHalf + secondHalf;
-               
+                
                 $(".calc-display h4").text(display);
             }
             
@@ -88,7 +100,7 @@ function clickFunction(inputButton){
             
             console.log("NEXT: ");
             
-           if(memory.length > 0 && currentlyAccessingLocation < memory.length - 1){
+            if(memory.length > 0 && currentlyAccessingLocation < memory.length - 1){
 
             console.log(currentlyAccessingLocation);
             
@@ -102,7 +114,7 @@ function clickFunction(inputButton){
                     
                 }
 
-           }
+            }
 
     
         }
@@ -110,35 +122,32 @@ function clickFunction(inputButton){
 
             
             //if this was the first time previous was
-            console.log("PREV: ");
+            
             
             if(firstPrev == true){
                 memory[memoryIndex] = display;
                 currentlyAccessingLocation++;
-                console.log("setting to false");
+                
                 
                 firstPrev = false;
             }
 
-               
+                
             
             
             
             if(memory.length > 0 && currentlyAccessingLocation > 0){
 
                 currentlyAccessingLocation--;
-                console.log(memory);
                 
-                console.log("testing");
-                console.log("CAL2: " + currentlyAccessingLocation);
                 
                 
                 display = memory[currentlyAccessingLocation];
                 
                 
                 $(".calc-display h4").text(display);
-               
-           }
+                
+            }
         }      
         else if(buttonPressed == "ON/OFF"){
             //turn off calculator
@@ -152,7 +161,7 @@ function clickFunction(inputButton){
             //move indicator left
             //get location of indicator
             var location = getIndicatorIndex();
-           
+            
             
             if(location > 0){
                 //remove indicator from display
@@ -176,7 +185,7 @@ function clickFunction(inputButton){
                 $(".calc-display h4").text(display);
             }
             $('.calc-display').animate({scrollLeft:'-=20'},1);
-           
+            
     
         }
         else if(buttonPressed == "→"){
@@ -189,21 +198,21 @@ function clickFunction(inputButton){
                 $(".calc-display h4").text(display);
             }
             else{
-               
-                 //remove indicator from display
-                 let firstHalf = display.slice(0,location);
-                 let secondHalf = display.slice(location+1);
-     
-                 let newArray = firstHalf + secondHalf;
-     
-                 //add indicator to new position
-                 firstHalf = newArray.slice(0,location + 1);
-                 secondHalf = newArray.slice(location + 1);
-                 firstHalf += "|";
-     
-                 newArray = firstHalf + secondHalf;
-                 display = newArray;
-                 $(".calc-display h4").text(display);
+                
+                    //remove indicator from display
+                    let firstHalf = display.slice(0,location);
+                    let secondHalf = display.slice(location+1);
+        
+                    let newArray = firstHalf + secondHalf;
+        
+                    //add indicator to new position
+                    firstHalf = newArray.slice(0,location + 1);
+                    secondHalf = newArray.slice(location + 1);
+                    firstHalf += "|";
+        
+                    newArray = firstHalf + secondHalf;
+                    display = newArray;
+                    $(".calc-display h4").text(display);
     
             }
             $('.calc-display').animate({scrollLeft:'+=20'},1);
@@ -225,12 +234,12 @@ function clickFunction(inputButton){
             }
             
             let saveString = display;
-           
+            
 
 
             //add a '*' to any brackets used for multiplication
             let indexesOpen = [];
-           
+            
             
             
             //locate brackets
@@ -244,7 +253,7 @@ function clickFunction(inputButton){
                             if( character != "+" &&  character != "-" &&  character != "/" &&  character != "*" && character != "(" ){
                                 indexesOpen.push(i);
                             }
-                               
+                                
                         }
                         else if(display[i - 1] == ")"){
     
@@ -271,10 +280,10 @@ function clickFunction(inputButton){
     
                 firstHalf += "*";
     
-                 //join strings back together 
+                    //join strings back together 
                 display = firstHalf + secondHalf;
     
-                 //increase other indexes by 1
+                    //increase other indexes by 1
                 for(let j = i; j < indexesOpen.length; j++){
     
                     indexesOpen[j]++;
@@ -282,8 +291,8 @@ function clickFunction(inputButton){
                 }
     
                 
-               
-               
+                
+                
     
             }
             
@@ -297,17 +306,17 @@ function clickFunction(inputButton){
             if(display != ""){
                 try {
                     ans = eval(display);
-                   
-                  }
-                  catch(err) {
+                    
+                    }
+                    catch(err) {
                     
                     console.log(err);
                     
                     trigger = false;
-                   
+                    
                 
                     $(".calc-display h4").text("SYNTAX ERROR");
-                  }
+                    }
             }
             if(trigger == true){
 
@@ -319,6 +328,7 @@ function clickFunction(inputButton){
                     currentlyAccessingLocation = memoryIndex;
                     memoryIndex++;
                     display = ans.toString();
+                    justAnswered = true;
                     $(".calc-display h4").text(display);
                 }                
             }
@@ -326,7 +336,7 @@ function clickFunction(inputButton){
             
     
             
-           
+            
     
         }
         else{
@@ -381,7 +391,7 @@ function clickFunction(inputButton){
     
                 
     
-               
+                
             }
             else{
         
@@ -391,7 +401,7 @@ function clickFunction(inputButton){
                 if(location == undefined){
                     display += "|";
                 }
-               
+                
                 
             }
             $(".calc-display h4").text(display);
@@ -399,9 +409,9 @@ function clickFunction(inputButton){
             
             $('.calc-display').animate({scrollLeft:'+=20'},1);
             
-           
             
-          
+            
+            
         }
         if(power == false){
             memory = [];
@@ -409,7 +419,10 @@ function clickFunction(inputButton){
             currentlyAccessingLocation = 0;
             firstPrev = true;
         }
+         
         
+        
+           
     }
     else{
         if(buttonPressed == "ON/OFF"){
